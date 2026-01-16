@@ -1,3 +1,67 @@
+<script setup lang="ts">
+  import { ref, onMounted } from 'vue'
+  import { useRoute, useRouter } from 'vue-router'
+  import { useToast } from 'vue-toastification'
+  import { jobService } from '@/services/api'
+  // FIXED: Removed 'Job' from the import as it was declared but never used
+  import type { JobFormData } from '@/types/job'
+  
+  const route = useRoute()
+  const router = useRouter()
+  const toast = useToast()
+  
+  const jobId = ref<string | null>(null)
+  const formData = ref<JobFormData>({
+    title: '', company: '', location: '', type: '', salary: '', description: '', requirements: ''
+  })
+  
+  const loading = ref(true)
+  const submitting = ref(false)
+  const error = ref<string | null>(null)
+  
+  const loadJob = async () => {
+    loading.value = true
+    try {
+      const id = route.params.id as string
+      jobId.value = id
+      const job = await jobService.getJobById(id)
+      
+      formData.value = {
+        title: job.title,
+        company: job.company,
+        location: job.location,
+        type: job.type,
+        salary: job.salary,
+        description: job.description,
+        requirements: Array.isArray(job.requirements) ? job.requirements.join('\n') : ''
+      }
+    } catch (err) {
+      error.value = 'Job not found.'
+      console.error(err)
+    } finally {
+      loading.value = false
+    }
+  }
+  
+  const handleSubmit = async () => {
+    if (!jobId.value) return
+    submitting.value = true
+    try {
+      const requirements = formData.value.requirements.split('\n').map(r => r.trim()).filter(r => r.length > 0)
+      await jobService.updateJob(jobId.value, { ...formData.value, requirements })
+      toast.success('Job updated successfully!')
+      router.push(`/jobs/${jobId.value}`)
+    } catch (err) {
+      toast.error('Failed to update job.')
+      console.error(err)
+    } finally {
+      submitting.value = false
+    }
+  }
+  
+  onMounted(() => { loadJob() })
+  </script>
+
 <template>
   <div class="min-h-screen bg-gray-50 py-12">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -75,66 +139,3 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import { useToast } from 'vue-toastification'
-import { jobService } from '@/services/api'
-import type { JobFormData, Job } from '@/types/job'
-
-const route = useRoute()
-const router = useRouter()
-const toast = useToast()
-
-// FIX: jobId is now string
-const jobId = ref<string | null>(null)
-const formData = ref<JobFormData>({
-  title: '', company: '', location: '', type: '', salary: '', description: '', requirements: ''
-})
-
-const loading = ref(true)
-const submitting = ref(false)
-const error = ref<string | null>(null)
-
-const loadJob = async () => {
-  loading.value = true
-  try {
-    // FIX: Remove parseInt
-    const id = route.params.id as string
-    jobId.value = id
-    const job = await jobService.getJobById(id)
-    
-    formData.value = {
-      title: job.title,
-      company: job.company,
-      location: job.location,
-      type: job.type,
-      salary: job.salary,
-      description: job.description,
-      requirements: Array.isArray(job.requirements) ? job.requirements.join('\n') : ''
-    }
-  } catch (err) {
-    error.value = 'Job not found.'
-    console.error(err)
-  } finally {
-    loading.value = false
-  }
-}
-
-const handleSubmit = async () => {
-  if (!jobId.value) return
-  submitting.value = true
-  try {
-    const requirements = formData.value.requirements.split('\n').map(r => r.trim()).filter(r => r.length > 0)
-    await jobService.updateJob(jobId.value, { ...formData.value, requirements })
-    toast.success('Job updated successfully!')
-    router.push(`/jobs/${jobId.value}`)
-  } catch (error) {
-    toast.error('Failed to update job.')
-  } finally {
-    submitting.value = false
-  }
-}
-
-onMounted(() => { loadJob() })
-</script>

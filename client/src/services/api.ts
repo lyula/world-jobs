@@ -4,7 +4,7 @@ import type { Job } from '@/types/job'
 // Use production API URL if deployed, otherwise use local
 const API_BASE_URL = import.meta.env.VITE_API_URL || 
   (import.meta.env.PROD 
-    ? 'https://world-jobs-api.vercel.app/api' 
+    ? 'https://world-jobs.onrender.com' 
     : 'http://localhost:4000/api')
 
 const api = axios.create({

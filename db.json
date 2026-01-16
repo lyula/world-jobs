@@ -1,0 +1,97 @@
+{
+  "jobs": [
+    {
+      "id": 1,
+      "title": "Senior Vue.js Developer",
+      "company": "Tech Innovations Inc.",
+      "location": "San Francisco, CA",
+      "type": "Full-time",
+      "salary": "$120,000 - $150,000",
+      "description": "We are looking for an experienced Vue.js developer to join our dynamic team. You will be responsible for developing and maintaining complex web applications using Vue 3, TypeScript, and modern frontend technologies.",
+      "requirements": [
+        "5+ years of experience with Vue.js",
+        "Strong TypeScript knowledge",
+        "Experience with Vue Router and Pinia",
+        "Knowledge of testing frameworks"
+      ],
+      "postedDate": "2024-01-15"
+    },
+    {
+      "id": 2,
+      "title": "Frontend Developer (Vue.js)",
+      "company": "StartupHub",
+      "location": "Remote",
+      "type": "Full-time",
+      "salary": "$90,000 - $120,000",
+      "description": "Join our fast-growing startup as a Frontend Developer. Work on cutting-edge projects using Vue.js, TypeScript, and modern web technologies. Remote work available.",
+      "requirements": [
+        "3+ years of Vue.js experience",
+        "TypeScript proficiency",
+        "Git workflow experience",
+        "Strong problem-solving skills"
+      ],
+      "postedDate": "2024-01-20"
+    },
+    {
+      "id": 3,
+      "title": "Vue.js Team Lead",
+      "company": "Enterprise Solutions",
+      "location": "New York, NY",
+      "type": "Full-time",
+      "salary": "$150,000 - $180,000",
+      "description": "Lead a team of talented Vue.js developers in building enterprise-level applications. This role requires both technical expertise and leadership skills.",
+      "requirements": [
+        "7+ years of frontend development experience",
+        "3+ years leading development teams",
+        "Expert-level Vue.js knowledge",
+        "Experience with microservices architecture"
+      ],
+      "postedDate": "2024-01-18"
+    },
+    {
+      "id": 4,
+      "title": "Junior Vue.js Developer",
+      "company": "Digital Agency",
+      "location": "Austin, TX",
+      "type": "Full-time",
+      "salary": "$60,000 - $80,000",
+      "description": "Perfect opportunity for a junior developer to grow their skills in Vue.js development. We offer mentorship and professional development opportunities.",
+      "requirements": [
+        "1+ years of Vue.js experience",
+        "Understanding of JavaScript fundamentals",
+        "Willingness to learn",
+        "Portfolio of projects"
+      ],
+      "postedDate": "2024-01-22"
+    },
+    {
+      "id": 5,
+      "title": "Full Stack Developer (Vue.js + Node.js)",
+      "company": "CloudTech",
+      "location": "Seattle, WA",
+      "type": "Full-time",
+      "salary": "$110,000 - $140,000",
+      "description": "Seeking a Full Stack Developer proficient in Vue.js and Node.js. You'll work on both frontend and backend, building scalable cloud applications.",
+      "requirements": [
+        "4+ years full stack experience",
+        "Vue.js and Node.js proficiency",
+        "Database design experience",
+        "API development skills"
+      ],
+      "postedDate": "2024-01-19"
+    },
+    {
+      "title": "Senior Developer",
+      "company": "Rent Hero Kenya",
+      "location": "Nairobi Kenya",
+      "type": "Remote",
+      "salary": "$2000 - $3500",
+      "description": "A senior developer oversees the creation and execution of software applications. They use their advanced programming skills and industry knowledge to lead the design process, ensuring that software systems meet their clients' expectations and requirements.",
+      "requirements": [
+        "deep technical skills (coding, architecture, debugging, languages), strong problem-solving, leadership/mentorship, excellent communication, project management, and a broad understanding of systems, focusing on quality, best practices, and guiding junior developers, not just writing code"
+      ],
+      "postedDate": "2026-01-16",
+      "id": 6
+    }
+  ]
+}

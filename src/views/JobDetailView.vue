@@ -1,13 +1,11 @@
 <template>
   <div class="min-h-screen bg-gray-50 py-12">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <!-- Loading State -->
       <div v-if="loading" class="text-center py-16">
         <i class="pi pi-spin pi-spinner text-5xl text-primary-600"></i>
         <p class="mt-4 text-gray-600">Loading job details...</p>
       </div>
 
-      <!-- Error State -->
       <div v-else-if="error" class="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
         <i class="pi pi-exclamation-triangle text-4xl text-red-600 mb-4"></i>
         <p class="text-red-800 mb-4">{{ error }}</p>
@@ -19,7 +17,6 @@
         </router-link>
       </div>
 
-      <!-- Job Details -->
       <div v-else-if="job" class="bg-white rounded-lg shadow-lg p-8">
         <div class="mb-6">
           <div class="flex justify-between items-start mb-4">
@@ -118,7 +115,8 @@ const loadJob = async () => {
   loading.value = true
   error.value = null
   try {
-    const jobId = parseInt(route.params.id as string)
+    // FIX: Use string ID directly for MongoDB
+    const jobId = route.params.id as string
     job.value = await jobService.getJobById(jobId)
   } catch (err) {
     error.value = 'Job not found. It may have been deleted.'

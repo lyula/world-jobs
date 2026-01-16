@@ -5,130 +5,51 @@
         <h1 class="text-4xl font-bold text-gray-800 mb-8">Add New Job</h1>
 
         <form @submit.prevent="handleSubmit" class="space-y-6">
-          <!-- Job Title -->
           <div>
-            <label for="title" class="block text-sm font-medium text-gray-700 mb-2">
-              Job Title *
-            </label>
-            <input
-              id="title"
-              v-model="formData.title"
-              type="text"
-              required
-              class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-              placeholder="e.g., Senior Vue.js Developer"
-            />
+            <label for="title" class="block text-sm font-medium text-gray-700 mb-2">Job Title *</label>
+            <input id="title" v-model="formData.title" type="text" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500" placeholder="e.g., Senior Vue.js Developer" />
           </div>
 
-          <!-- Company Name -->
           <div>
-            <label for="company" class="block text-sm font-medium text-gray-700 mb-2">
-              Company Name *
-            </label>
-            <input
-              id="company"
-              v-model="formData.company"
-              type="text"
-              required
-              class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-              placeholder="e.g., Tech Innovations Inc."
-            />
+            <label for="company" class="block text-sm font-medium text-gray-700 mb-2">Company Name *</label>
+            <input id="company" v-model="formData.company" type="text" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500" />
           </div>
 
-          <!-- Location -->
-          <div>
-            <label for="location" class="block text-sm font-medium text-gray-700 mb-2">
-              Location *
-            </label>
-            <input
-              id="location"
-              v-model="formData.location"
-              type="text"
-              required
-              class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-              placeholder="e.g., San Francisco, CA"
-            />
-          </div>
-
-          <!-- Job Type and Salary -->
           <div class="grid md:grid-cols-2 gap-6">
             <div>
-              <label for="type" class="block text-sm font-medium text-gray-700 mb-2">
-                Job Type *
-              </label>
-              <select
-                id="type"
-                v-model="formData.type"
-                required
-                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-              >
+              <label for="type" class="block text-sm font-medium text-gray-700 mb-2">Job Type *</label>
+              <select id="type" v-model="formData.type" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500">
                 <option value="">Select Type</option>
                 <option value="Full-time">Full-time</option>
                 <option value="Part-time">Part-time</option>
                 <option value="Contract">Contract</option>
-                <option value="Internship">Internship</option>
                 <option value="Remote">Remote</option>
               </select>
             </div>
-
             <div>
-              <label for="salary" class="block text-sm font-medium text-gray-700 mb-2">
-                Salary Range *
-              </label>
-              <input
-                id="salary"
-                v-model="formData.salary"
-                type="text"
-                required
-                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                placeholder="e.g., $100,000 - $150,000"
-              />
+              <label for="salary" class="block text-sm font-medium text-gray-700 mb-2">Salary Range *</label>
+              <input id="salary" v-model="formData.salary" type="text" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500" placeholder="e.g., $100k - $120k" />
             </div>
           </div>
 
-          <!-- Job Description -->
           <div>
-            <label for="description" class="block text-sm font-medium text-gray-700 mb-2">
-              Job Description *
-            </label>
-            <textarea
-              id="description"
-              v-model="formData.description"
-              required
-              rows="6"
-              class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-              placeholder="Describe the job position, responsibilities, and what makes it great..."
-            ></textarea>
+            <label for="location" class="block text-sm font-medium text-gray-700 mb-2">Location *</label>
+            <input id="location" v-model="formData.location" type="text" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500" />
           </div>
 
-          <!-- Requirements -->
           <div>
-            <label for="requirements" class="block text-sm font-medium text-gray-700 mb-2">
-              Requirements * (one per line)
-            </label>
-            <textarea
-              id="requirements"
-              v-model="formData.requirements"
-              required
-              rows="6"
-              class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-              placeholder="Enter each requirement on a new line&#10;e.g.,&#10;5+ years of experience&#10;Strong TypeScript knowledge&#10;Vue.js proficiency"
-            ></textarea>
+            <label for="description" class="block text-sm font-medium text-gray-700 mb-2">Job Description *</label>
+            <textarea id="description" v-model="formData.description" required rows="5" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500"></textarea>
           </div>
 
-          <!-- Submit Buttons -->
-          <div class="flex justify-end space-x-4 pt-6 border-t border-gray-200">
-            <router-link
-              to="/jobs"
-              class="px-6 py-3 border border-gray-300 rounded-md text-gray-700 font-medium hover:bg-gray-50 transition-colors"
-            >
-              Cancel
-            </router-link>
-            <button
-              type="submit"
-              :disabled="submitting"
-              class="px-6 py-3 bg-primary-600 text-white rounded-md font-medium hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
-            >
+          <div>
+            <label for="requirements" class="block text-sm font-medium text-gray-700 mb-2">Requirements * (one per line)</label>
+            <textarea id="requirements" v-model="formData.requirements" required rows="5" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500" placeholder="Requirement 1&#10;Requirement 2"></textarea>
+          </div>
+
+          <div class="flex justify-end space-x-4 pt-6 border-t">
+            <router-link to="/jobs" class="px-6 py-3 border rounded-md text-gray-700 hover:bg-gray-50">Cancel</router-link>
+            <button type="submit" :disabled="submitting" class="px-6 py-3 bg-primary-600 text-white rounded-md hover:bg-primary-700 disabled:opacity-50 flex items-center space-x-2">
               <i v-if="submitting" class="pi pi-spin pi-spinner"></i>
               <span>{{ submitting ? 'Creating...' : 'Create Job' }}</span>
             </button>
@@ -148,6 +69,7 @@ import type { JobFormData } from '@/types/job'
 
 const router = useRouter()
 const toast = useToast()
+const submitting = ref(false)
 
 const formData = ref<JobFormData>({
   title: '',
@@ -159,23 +81,21 @@ const formData = ref<JobFormData>({
   requirements: ''
 })
 
-const submitting = ref(false)
-
 const handleSubmit = async () => {
   submitting.value = true
-
   try {
-    const requirements = formData.value.requirements
+    // Process the newline-separated string into an array for MongoDB
+    const requirementsArray = formData.value.requirements
       .split('\n')
       .map(req => req.trim())
       .filter(req => req.length > 0)
 
-    const jobData = {
+    const payload = {
       ...formData.value,
-      requirements
+      requirements: requirementsArray
     }
 
-    await jobService.createJob(jobData)
+    await jobService.createJob(payload)
     toast.success('Job created successfully!')
     router.push('/jobs')
   } catch (error) {

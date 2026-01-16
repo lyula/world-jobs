@@ -6,19 +6,16 @@
         <p class="text-gray-600">Discover opportunities that match your career goals</p>
       </div>
 
-      <!-- Loading State -->
       <div v-if="loading" class="text-center py-16">
         <i class="pi pi-spin pi-spinner text-5xl text-primary-600"></i>
         <p class="mt-4 text-gray-600">Loading jobs...</p>
       </div>
 
-      <!-- Error State -->
       <div v-else-if="error" class="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
         <i class="pi pi-exclamation-triangle text-4xl text-red-600 mb-4"></i>
         <p class="text-red-800">{{ error }}</p>
       </div>
 
-      <!-- Jobs Grid -->
       <div v-else-if="jobs.length > 0" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         <JobCard
           v-for="job in jobs"
@@ -31,7 +28,6 @@
         />
       </div>
 
-      <!-- Empty State -->
       <div v-else class="text-center py-16">
         <i class="pi pi-briefcase text-6xl text-gray-300 mb-4"></i>
         <p class="text-xl text-gray-600 mb-4">No jobs found</p>
@@ -65,14 +61,15 @@ const loadJobs = async () => {
   try {
     jobs.value = await jobService.getAllJobs()
   } catch (err) {
-    error.value = 'Failed to load jobs. Please make sure JSON server is running.'
+    error.value = 'Failed to load jobs. Please check if the backend server is running.'
     console.error('Error loading jobs:', err)
   } finally {
     loading.value = false
   }
 }
 
-const deleteJob = async (id: number) => {
+// FIX: id is now string/number for MongoDB compatibility
+const deleteJob = async (id: string | number) => {
   if (!confirm('Are you sure you want to delete this job?')) {
     return
   }

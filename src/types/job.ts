@@ -1,5 +1,6 @@
 export interface Job {
-  id?: number
+  id?: string | number
+  _id?: string
   title: string
   company: string
   location: string
@@ -8,6 +9,8 @@ export interface Job {
   description: string
   requirements: string[]
   postedDate?: string
+  createdAt?: string
+  updatedAt?: string
 }
 
 export interface JobFormData {

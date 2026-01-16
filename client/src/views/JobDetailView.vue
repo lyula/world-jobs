@@ -1,3 +1,73 @@
+<script setup lang="ts">
+  import { ref, onMounted } from 'vue'
+  import { useRoute, useRouter } from 'vue-router'
+  import { useToast } from 'vue-toastification'
+  import { jobService } from '@/services/api'
+  import type { Job } from '@/types/job'
+  
+  const route = useRoute()
+  const router = useRouter()
+  const toast = useToast()
+  
+  const job = ref<Job | null>(null)
+  const loading = ref(true)
+  const error = ref<string | null>(null)
+  
+  const loadJob = async () => {
+    loading.value = true
+    error.value = null
+    try {
+      // FIX: Use string ID directly for MongoDB
+      const jobId = route.params.id as string
+      job.value = await jobService.getJobById(jobId)
+    } catch (err) {
+      error.value = 'Job not found. It may have been deleted.'
+      console.error('Error loading job:', err)
+    } finally {
+      loading.value = false
+    }
+  }
+  
+  const editJob = () => {
+    if (job.value?.id) {
+      router.push(`/jobs/edit/${job.value.id}`)
+    }
+  }
+  
+  const deleteJob = async () => {
+    if (!job.value?.id) return
+  
+    if (!confirm('Are you sure you want to delete this job?')) {
+      return
+    }
+  
+    try {
+      await jobService.deleteJob(job.value.id)
+      toast.success('Job deleted successfully')
+      router.push('/jobs')
+    } catch (err) {
+      toast.error('Failed to delete job')
+      console.error('Error deleting job:', err)
+    }
+  }
+  
+  const applyForJob = () => {
+    toast.info('Application feature coming soon!')
+  }
+  
+  const formatDate = (date?: string) => {
+    if (!date) return 'N/A'
+    return new Date(date).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    })
+  }
+  
+  onMounted(() => {
+    loadJob()
+  })
+  </script>
 <template>
   <div class="min-h-screen bg-gray-50 py-12">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -17,29 +87,11 @@
         </router-link>
       </div>
 
-      <div v-else-if="job" class="bg-white rounded-lg shadow-lg p-8">
+      <div v-else-if="job" class="bg-white rounded-lg shadow-lg p-6 sm:p-8">
         <div class="mb-6">
-          <div class="flex justify-between items-start mb-4">
-            <div>
-              <h1 class="text-4xl font-bold text-gray-800 mb-2">{{ job.title }}</h1>
-              <p class="text-2xl text-primary-600 font-semibold">{{ job.company }}</p>
-            </div>
-            <div class="flex space-x-2">
-              <button
-                @click="editJob"
-                class="bg-primary-600 text-white px-4 py-2 rounded-md hover:bg-primary-700 transition-colors flex items-center space-x-2"
-              >
-                <i class="pi pi-pencil"></i>
-                <span>Edit</span>
-              </button>
-              <button
-                @click="deleteJob"
-                class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors flex items-center space-x-2"
-              >
-                <i class="pi pi-trash"></i>
-                <span>Delete</span>
-              </button>
-            </div>
+          <div class="mb-4">
+            <h1 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-2">{{ job.title }}</h1>
+            <p class="text-xl sm:text-2xl text-primary-600 font-semibold">{{ job.company }}</p>
           </div>
 
           <div class="flex flex-wrap gap-4 mb-6">
@@ -69,14 +121,31 @@
 
         <div class="border-t border-gray-200 pt-6">
           <h2 class="text-2xl font-bold text-gray-800 mb-4">Requirements</h2>
-          <ul class="list-disc list-inside space-y-2">
+          <ul class="list-disc list-inside space-y-2 mb-8">
             <li v-for="(requirement, index) in job.requirements" :key="index" class="text-gray-700">
               {{ requirement }}
             </li>
           </ul>
         </div>
 
-        <div class="mt-8 pt-6 border-t border-gray-200 flex justify-between">
+        <div class="border-t border-gray-200 pt-6 flex flex-col sm:flex-row gap-3">
+          <button
+            @click="editJob"
+            class="flex-1 bg-primary-600 text-white px-4 py-2 rounded-md hover:bg-primary-700 transition-colors flex items-center justify-center space-x-2"
+          >
+            <i class="pi pi-pencil"></i>
+            <span>Edit Job</span>
+          </button>
+          <button
+            @click="deleteJob"
+            class="flex-1 bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors flex items-center justify-center space-x-2"
+          >
+            <i class="pi pi-trash"></i>
+            <span>Delete Job</span>
+          </button>
+        </div>
+
+        <div class="mt-8 pt-6 border-t border-gray-200 flex flex-col sm:flex-row gap-4 justify-between items-center">
           <router-link
             to="/jobs"
             class="text-primary-600 hover:text-primary-800 font-medium flex items-center space-x-2"
@@ -85,7 +154,7 @@
             <span>Back to All Jobs</span>
           </router-link>
           <button
-            class="bg-primary-600 text-white px-6 py-3 rounded-md hover:bg-primary-700 transition-colors font-medium"
+            class="w-full sm:w-auto bg-green-600 text-white px-8 py-3 rounded-md hover:bg-green-700 transition-colors font-bold shadow-md"
             @click="applyForJob"
           >
             Apply Now
@@ -96,73 +165,3 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import { useToast } from 'vue-toastification'
-import { jobService } from '@/services/api'
-import type { Job } from '@/types/job'
-
-const route = useRoute()
-const router = useRouter()
-const toast = useToast()
-
-const job = ref<Job | null>(null)
-const loading = ref(true)
-const error = ref<string | null>(null)
-
-const loadJob = async () => {
-  loading.value = true
-  error.value = null
-  try {
-    // FIX: Use string ID directly for MongoDB
-    const jobId = route.params.id as string
-    job.value = await jobService.getJobById(jobId)
-  } catch (err) {
-    error.value = 'Job not found. It may have been deleted.'
-    console.error('Error loading job:', err)
-  } finally {
-    loading.value = false
-  }
-}
-
-const editJob = () => {
-  if (job.value?.id) {
-    router.push(`/jobs/edit/${job.value.id}`)
-  }
-}
-
-const deleteJob = async () => {
-  if (!job.value?.id) return
-
-  if (!confirm('Are you sure you want to delete this job?')) {
-    return
-  }
-
-  try {
-    await jobService.deleteJob(job.value.id)
-    toast.success('Job deleted successfully')
-    router.push('/jobs')
-  } catch (err) {
-    toast.error('Failed to delete job')
-    console.error('Error deleting job:', err)
-  }
-}
-
-const applyForJob = () => {
-  toast.info('Application feature coming soon!')
-}
-
-const formatDate = (date?: string) => {
-  if (!date) return 'N/A'
-  return new Date(date).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  })
-}
-
-onMounted(() => {
-  loadJob()
-})
-</script>

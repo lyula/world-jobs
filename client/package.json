@@ -12,26 +12,27 @@
     "migrate:clear": "node server/scripts/migrate.js --clear"
   },
   "dependencies": {
-    "vue": "^3.4.21",
-    "vue-router": "^4.3.0",
-    "vue-toastification": "^2.0.0-rc.5",
-    "primevue": "^3.52.2",
-    "primeicons": "^6.0.1",
     "axios": "^1.6.8",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "mongoose": "^8.0.3",
-    "cors": "^2.8.5",
-    "dotenv": "^16.3.1"
+    "primeicons": "^6.0.1",
+    "primevue": "^3.52.2",
+    "vue": "^3.4.21",
+    "vue-router": "^4.3.0",
+    "vue-toastification": "^2.0.0-rc.5"
   },
   "devDependencies": {
+    "@types/node": "^25.0.9",
     "@vitejs/plugin-vue": "^5.0.4",
-    "typescript": "^5.3.3",
-    "vue-tsc": "^2.1.10",
-    "vite": "^5.1.0",
-    "tailwindcss": "^3.4.1",
     "autoprefixer": "^10.4.18",
+    "json-server": "^0.17.4",
     "postcss": "^8.4.35",
-    "json-server": "^0.17.4"
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5.3.3",
+    "vite": "^5.1.0",
+    "vue-tsc": "^2.1.10"
   },
   "packageManager": "pnpm@10.12.1+sha512.f0dda8580f0ee9481c5c79a1d927b9164f2c478e90992ad268bbb2465a736984391d6333d2c327913578b2804af33474ca554ba29c04a8b13060a717675ae3ac"
 }

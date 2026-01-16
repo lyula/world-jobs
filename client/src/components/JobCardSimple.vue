@@ -1,3 +1,23 @@
+<script setup lang="ts">
+  import { useRouter } from 'vue-router'
+  import type { Job } from '@/types/job'
+  
+  interface Props {
+    job: Job
+  }
+  
+  const props = defineProps<Props>()
+  
+  const router = useRouter()
+  
+  const handleClick = () => {
+    if (props.job.id) {
+      router.push(`/jobs/${props.job.id}`)
+    }
+  }
+  </script>
+
+  
 <template>
   <div
     class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow cursor-pointer"
@@ -12,21 +32,4 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { useRouter } from 'vue-router'
-import type { Job } from '@/types/job'
 
-interface Props {
-  job: Job
-}
-
-const props = defineProps<Props>()
-
-const router = useRouter()
-
-const handleClick = () => {
-  if (props.job.id) {
-    router.push(`/jobs/${props.job.id}`)
-  }
-}
-</script>
